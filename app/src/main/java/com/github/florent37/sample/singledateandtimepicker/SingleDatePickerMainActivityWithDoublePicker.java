@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker;
 import com.github.florent37.singledateandtimepicker.dialog.DoubleDateAndTimePickerDialog;
+import com.github.florent37.singledateandtimepicker.dialog.DoubleDateAndTimePickerDialogWithOutTab;
 import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog;
 
 import java.text.SimpleDateFormat;
@@ -18,17 +19,21 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SingleDatePickerMainActivityWithDoublePicker extends AppCompatActivity {
 
+    @BindView(R.id.singleText)
+    TextView singleText;
+
     @BindView(R.id.doubleText)
     TextView doubleText;
 
-    @BindView(R.id.singleText)
-    TextView singleText;
+    @BindView(R.id.doubleText2)
+    TextView doubleText2;
 
     @BindView(R.id.singleTimeText)
     TextView singleTimeText;
@@ -46,6 +51,7 @@ public class SingleDatePickerMainActivityWithDoublePicker extends AppCompatActiv
     SimpleDateFormat simpleDateLocaleFormat;
     SingleDateAndTimePickerDialog.Builder singleBuilder;
     DoubleDateAndTimePickerDialog.Builder doubleBuilder;
+    DoubleDateAndTimePickerDialogWithOutTab.Builder doubleBuilder2;
 
     private static String TAG = "SingleDatePickerMainActivityWithDoublePicker";
 
@@ -71,8 +77,9 @@ public class SingleDatePickerMainActivityWithDoublePicker extends AppCompatActiv
             singleBuilder.dismiss();
         if (doubleBuilder != null)
             doubleBuilder.dismiss();
+        if (doubleBuilder2 != null)
+            doubleBuilder2.dismiss();
     }
-
 
 
     @OnClick(R.id.singleTimeText)
@@ -200,8 +207,8 @@ public class SingleDatePickerMainActivityWithDoublePicker extends AppCompatActiv
                 //.minutesStep(15)
                 //.mustBeOnFuture()
                 //.defaultDate(defaultDate)
-               // .minDateRange(minDate)
-               // .maxDateRange(maxDate)
+                // .minDateRange(minDate)
+                // .maxDateRange(maxDate)
 
                 .displayListener(new SingleDateAndTimePickerDialog.DisplayListener() {
                     @Override
@@ -272,6 +279,56 @@ public class SingleDatePickerMainActivityWithDoublePicker extends AppCompatActiv
                     }
                 });
         doubleBuilder.display();
+    }
+
+    @OnClick(R.id.doubleLayout2)
+    public void doubleClicked2() {
+
+        final Date now = new Date();
+        final Calendar calendarMin = Calendar.getInstance();
+        final Calendar calendarMax = Calendar.getInstance();
+
+        calendarMin.setTime(now); // Set min now
+        calendarMax.setTime(new Date(now.getTime() + TimeUnit.DAYS.toMillis(150))); // Set max now + 150 days
+
+        final Date minDate = calendarMin.getTime();
+        final Date maxDate = calendarMax.getTime();
+
+        doubleBuilder2 = new DoubleDateAndTimePickerDialogWithOutTab.Builder(this)
+                .setTimeZone(TimeZone.getDefault())
+                //.bottomSheet()
+                //.curved()
+
+//                .backgroundColor(Color.BLACK)
+//                .mainColor(Color.GREEN)
+                .minutesStep(15)
+                .mustBeOnFuture()
+
+                .minDateRange(minDate)
+                .maxDateRange(maxDate)
+
+                .secondDateAfterFirst(true)
+
+                //.defaultDate(now)
+                .tab0Date(now)
+                .tab1Date(new Date(now.getTime() + TimeUnit.HOURS.toMillis(1)))
+
+                .title("Double")
+
+//                .tab0Text("Depart")
+//                .tab1Text("Return")
+                .listener(new DoubleDateAndTimePickerDialogWithOutTab.Listener() {
+                    @Override
+                    public void onDateSelected(List<Date> dates) {
+                        final StringBuilder stringBuilder = new StringBuilder();
+                        for (Date date : dates) {
+                            stringBuilder.append(simpleDateFormat.format(date)).append("\n");
+                        }
+                        doubleText2.setText(stringBuilder.toString());
+                    }
+                });
+
+        doubleBuilder2.display();
     }
 
     @OnClick(R.id.singleDateLocaleLayout)
