@@ -36,6 +36,9 @@ public class WheelAmPmPicker extends WheelPicker<String> {
 
     @Override
     protected String initDefault() {
+        if(isInEditMode()){
+            return "AM";
+        }
         if (dateHelper.getHour(dateHelper.today(), true) >= SingleDateAndTimeConstants.MAX_HOUR_AM_PM) {
             return getLocalizedString(R.string.picker_pm);
         } else {
@@ -45,6 +48,9 @@ public class WheelAmPmPicker extends WheelPicker<String> {
 
     @Override
     protected List<String> generateAdapterValues(boolean showOnlyFutureDates){
+        if(isInEditMode()){
+            return Arrays.asList("AM", "PM");
+        }
         return Arrays.asList(
                 getLocalizedString(R.string.picker_am),
                 getLocalizedString(R.string.picker_pm)

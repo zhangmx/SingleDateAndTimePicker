@@ -58,6 +58,9 @@ public class WheelMonthPicker extends WheelPicker<String> {
 
     @Override
     protected String initDefault() {
+        if(isInEditMode()){
+            return "January";
+        }
         return String.valueOf(dateHelper.getMonth(dateHelper.today()));
     }
 

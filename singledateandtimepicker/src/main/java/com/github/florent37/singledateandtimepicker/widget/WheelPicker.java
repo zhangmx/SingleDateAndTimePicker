@@ -260,6 +260,9 @@ public abstract class WheelPicker<V> extends View {
     }
 
     public void setDefaultDate(Date date) {
+        if(isInEditMode()) {
+            return;
+        }
         if (adapter != null && adapter.getItemCount() > 0) {
             final int indexOfDate = findIndexOfDate(date);
             if (indexOfDate >= 0) {

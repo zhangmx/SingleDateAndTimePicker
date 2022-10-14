@@ -1,5 +1,6 @@
 package com.github.florent37.sample.singledateandtimepicker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -32,6 +33,11 @@ public class SingleDatePickerMainActivity extends AppCompatActivity {
             singleDateAndTimePicker.setEnabled(!singleDateAndTimePicker.isEnabled());
             singleDateAndTimePicker2.setEnabled(!singleDateAndTimePicker2.isEnabled());
         });
+
+        findViewById(R.id.double_date_picker_button).setOnClickListener(v -> {
+            startActivity(new Intent(this, SingleDatePickerMainActivityWithDoublePicker.class));
+        });
+
     }
 
     private void display(String toDisplay) {

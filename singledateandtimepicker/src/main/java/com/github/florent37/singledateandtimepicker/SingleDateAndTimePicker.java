@@ -132,6 +132,9 @@ public class SingleDateAndTimePicker extends LinearLayout {
         for (WheelPicker wheelPicker : pickers) {
             wheelPicker.setDateHelper(dateHelper);
         }
+        if(isInEditMode()){
+            return;
+        }
         init(context, attrs);
     }
 

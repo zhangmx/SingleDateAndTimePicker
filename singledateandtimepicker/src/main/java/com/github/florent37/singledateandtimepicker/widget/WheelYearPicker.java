@@ -42,6 +42,9 @@ public class WheelYearPicker extends WheelPicker<String> {
 
     @Override
     protected String initDefault() {
+        if(isInEditMode()){
+            return "2017";
+        }
         return getTodayText();
     }
 

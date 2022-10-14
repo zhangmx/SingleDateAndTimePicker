@@ -36,6 +36,9 @@ public class WheelMinutePicker extends WheelPicker<String> {
 
     @Override
     protected String initDefault() {
+        if(isInEditMode()){
+            return "00";
+        }
         Calendar now = Calendar.getInstance();
         now.setTimeZone(dateHelper.getTimeZone());
         return getFormattedValue(now.get(Calendar.MINUTE));

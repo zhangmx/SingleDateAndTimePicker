@@ -43,6 +43,9 @@ public class WheelHourPicker extends WheelPicker<String> {
 
     @Override
     protected String initDefault() {
+        if(isInEditMode()){
+            return "00";
+        }
         return String.valueOf(dateHelper.getHour(dateHelper.today(), isAmPm));
     }
 

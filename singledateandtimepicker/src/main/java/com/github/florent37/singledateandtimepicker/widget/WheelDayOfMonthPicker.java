@@ -39,6 +39,9 @@ public class WheelDayOfMonthPicker extends WheelPicker<String> {
 
     @Override
     protected String initDefault() {
+        if(isInEditMode()){
+            return "01";
+        }
         return String.valueOf(dateHelper.getDay(dateHelper.today()));
     }
 

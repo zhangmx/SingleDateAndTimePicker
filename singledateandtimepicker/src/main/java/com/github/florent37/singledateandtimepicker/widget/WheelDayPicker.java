@@ -49,11 +49,17 @@ public class WheelDayPicker extends WheelPicker<DateWithLabel> {
 
     @Override
     protected DateWithLabel initDefault() {
+        if(isInEditMode()){
+            return new DateWithLabel("Today", new Date());
+        }
         return new DateWithLabel(getTodayText(), new Date());
     }
 
     @NonNull
     private String getTodayText() {
+        if(isInEditMode()){
+            return "Today";
+        }
         return getLocalizedString(R.string.picker_today);
     }
 
